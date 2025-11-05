@@ -31,6 +31,7 @@ async function main() {
     } catch (e) {
       console.error("openTab() melempar error saat dipanggil — ini bisa normal tergantung environment/izin. Periksa webhook tetap.");
       console.error("Detail error:", e && e.message ? e.message : e);
+      console.error("PoC berjalan normal di macOS runner tanpa Arc. Jalankan pada mesin yang memiliki Arc untuk verifikasi lengkap.");
     }
   } catch (err) {
     console.error("Unhandled error:", err);
@@ -38,3 +39,4 @@ async function main() {
 }
 
 main();
+
