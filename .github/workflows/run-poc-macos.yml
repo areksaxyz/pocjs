@@ -1,0 +1,39 @@
+name: Run Arc AppleScript PoC (macOS)
+
+on:
+  workflow_dispatch:
+
+jobs:
+  run-poc-macos:
+    runs-on: macos-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Initialize npm (if package.json missing)
+        run: |
+          if [ ! -f package.json ]; then
+            npm init -y
+          fi
+
+      - name: Install PoC dependency
+        run: |
+          # Install the arc applescript api used in PoC
+          npm install @kkoscielniak/arc-applescript-api --no-audit --no-fund
+
+      - name: Show Node/npm versions
+        run: |
+          node -v
+          npm -v
+
+      - name: Run PoC (macOS) 
+        env:
+          WEBHOOK_URL: ${{ secrets.POC_WEBHOOK_URL }}
+        run: |
+          echo "Running poc-env.js with WEBHOOK_URL from secrets"
+          node poc-env.js
